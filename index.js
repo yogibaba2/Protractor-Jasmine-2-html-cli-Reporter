@@ -241,7 +241,7 @@ function Jasmine2HTMLReporter(options) {
         });
         jsonOutput = 'var result = '+jsonOutput+';function getOutput(){return result};';
 
-        self.copyFolderRecursiveSync(__dirname + '/angular-html-report', self.savePath, false, function(){
+        self.copyFolderRecursiveSync(__dirname + '/angular-html-report-template', self.savePath, false, function(){
             self.writeFile('./assets/output.js', jsonOutput);
         });
 
