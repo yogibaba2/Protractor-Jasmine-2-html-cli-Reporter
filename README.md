@@ -2,9 +2,10 @@
 
 
 HTML reporter for Jasmine2 and Protractor that will include screenshots of each test if you want.
-This work is inspired by:
-* [Protractor Jasmine 2 Screenshot Reporter](https://github.com/mlison/protractor-jasmine2-screenshot-reporter) from [@mslison](https://github.com/mlison)
-* [Jasmine Reporters](https://github.com/larrymyers/jasmine-reporters) from [@larrymyers](https://github.com/larrymyers)
+This work is an improvised version of :
+* [HTML reporter for Jasmine2 and Protractor](https://github.com/Kenzitron/protractor-jasmine2-html-reporter) from [@Kenzitron](https://github.com/Kenzitron)
+
+This project combine cli and html reporting for Jasmine reporter. 
 
 ## Usage
 The <code>protractor-jasmine2-html-cli-reporter</code> is available via npm:
