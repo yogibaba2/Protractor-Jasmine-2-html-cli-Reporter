@@ -475,7 +475,6 @@ class Jasmine2HTMLCLIReporter {
     };
 
     suiteDone(suite) {
-
         //console report suite done
         this.stats.updateSuite(suite);
         this._depth--;
@@ -492,39 +491,6 @@ class Jasmine2HTMLCLIReporter {
     };
 
     jasmineDone(summary) {
-        if (this.currentSuite) {
-            // focused spec (fit) -- suiteDone was never called
-            this.suiteDone(this.fakeFocusedSuite);
-        }
-        //console.log(__suites);
-        //writing jsonfile
-        var jsonOutput = JSON.stringify(this.suites, function(key, value){
-            if(key == '_parent' || key == '_suite'){ return value && value.id;}
-            else {return value;}
-        });
-        jsonOutput = 'var result = '+jsonOutput+';function getOutput(){return result};';
-
-        this.copyFolderRecursiveSync(__dirname + '/angular-html-report-template', this.options.savePath, false, () => {
-            fs.writeFile(path.join(this.options.savePath, './assets/output.js'), jsonOutput, (err) => {
-                if (err) throw err;
-                console.log('The file has been saved!');
-              });
-        });
-
-        // var output = '';
-        // for (var i = 0; i < suites.length; i++) {
-        //     output += self.getOrWriteNestedOutput(suites[i]);
-        // }
-        // // if we have anything to write here, write out the consolidated file
-        // if (output) {
-        //     wrapOutputAndWriteFile(getReportFilename(), output);
-        // }
-        //log("Specs skipped but not reported (entire suite skipped or targeted to specific specs)", totalSpecsDefined - totalSpecsExecuted + totalSpecsDisabled);
-
-        this.finished = true;
-        // this is so phantomjs-testrunner.js can tell if we're done executing
-        exportObject.endTime = new Date();
-
         //jasmine done console report
         this.stats.done(summary);
 
@@ -536,6 +502,39 @@ class Jasmine2HTMLCLIReporter {
         }
 
         this._finalReport(summary);
+
+        //html report jasmine done
+        if (this.currentSuite) {
+            // focused spec (fit) -- suiteDone was never called
+            this.suiteDone(this.fakeFocusedSuite);
+        }
+        //console.log(__suites);
+        //writing jsonfile
+        var suitesSummary = {
+            suites : this.stats.suites,
+            specs : this.stats.specs,
+            expects : this.stats.expects
+        };
+
+        console.log(suitesSummary);
+
+        var jsonOutput = JSON.stringify(this.suites, function(key, value){
+            if(key == '_parent' || key == '_suite'){ return value && value.id;}
+            else {return value;}
+        });
+        jsonOutput = 'var result = { suites : '+jsonOutput+', summary : ' + JSON.stringify(suitesSummary) + '};function getOutput(){return result};';
+
+        this.copyFolderRecursiveSync(__dirname + '/angular-html-report-template', this.options.savePath, false, () => {
+            fs.writeFile(path.join(this.options.savePath, './assets/output.js'), jsonOutput, (err) => {
+                if (err) throw err;
+                console.log('The file has been saved!');
+              });
+        });
+
+        
+
+        this.finished = true;
+        exportObject.endTime = new Date();
     };
 }
 module.exports = Jasmine2HTMLCLIReporter;
