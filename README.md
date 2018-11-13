@@ -5,7 +5,9 @@ HTML reporter for Jasmine2 and Protractor that will include screenshots of each 
 This work is an improvised version of :
 * [HTML reporter for Jasmine2 and Protractor](https://github.com/Kenzitron/protractor-jasmine2-html-reporter) from [@Kenzitron](https://github.com/Kenzitron) 
 
+
 It also combine the console reporting module: 
+
 * [Progressive Console Reporter for Jasmine](https://github.com/onury/jasmine-console-reporter.git) from [@Onury](https://github.com/Onury)
 
 This project combine cli and html reporting for Jasmine reporter. 
