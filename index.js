@@ -517,16 +517,20 @@ class Jasmine2HTMLCLIReporter {
             specs : this.stats.specs,
             expects : this.stats.expects
         };
+
         var envDetails = {
             platform : this.getPlatform(),
             hostname : os.hostname(),
             username : os.userInfo().username
         };
+
         var jsonOutput = JSON.stringify(this.suites, function(key, value){
             if(key == '_parent' || key == '_suite'){ return value && value.id;}
             else {return value;}
         });
+
         jsonOutput = 'var result = { suites : '+jsonOutput+', summary : ' + JSON.stringify(suitesSummary) + ', environment : ' + JSON.stringify(envDetails) + '};function getOutput(){return result};';
+
 
         this.copyFolderRecursiveSync(__dirname + '/angular-html-report-template', this.options.savePath, false, () => {
             fs.writeFile(path.join(this.options.savePath, './assets/output.js'), jsonOutput, (err) => {
