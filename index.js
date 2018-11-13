@@ -7,7 +7,8 @@ const ci = require('ci-info'),
     _      = require('lodash'),
     path   = require('path'),
     async  = require('async'),
-    hat    = require('hat');
+    hat    = require('hat'),
+    os = require('os');
 
 // own modules
 const StreamPrinter = require('./lib/StreamPrinter');
@@ -23,8 +24,7 @@ var exportObject = exports, reportDate;
 class Jasmine2HTMLCLIReporter {
 
     constructor(options = {}) {
-
-        this.started = false;
+         this.started = false;
         this.finished = false;
 
         this.options = utils.getOption(options);
@@ -284,6 +284,9 @@ class Jasmine2HTMLCLIReporter {
         }
     }
 
+    getPlatform(){
+        return (os.type() == 'Darwin') ? 'Mac OS' : ((os.type() == 'Windows_NT') ? 'Windows' : os.type())  + ' ' + os.release();
+    }
 
     jasmineStarted(summary) {
         this.totalSpecsDefined = summary && summary.totalSpecsDefined || NaN;
@@ -493,7 +496,6 @@ class Jasmine2HTMLCLIReporter {
     jasmineDone(summary) {
         //jasmine done console report
         this.stats.done(summary);
-
         this.print.newLine();
         if (this.stats.specs.defined > 0) {
             if (this.verbosity.specs) this.print.newLine();
@@ -515,14 +517,16 @@ class Jasmine2HTMLCLIReporter {
             specs : this.stats.specs,
             expects : this.stats.expects
         };
-
-        console.log(suitesSummary);
-
+        var envDetails = {
+            platform : this.getPlatform(),
+            hostname : os.hostname(),
+            username : os.userInfo().username
+        };
         var jsonOutput = JSON.stringify(this.suites, function(key, value){
             if(key == '_parent' || key == '_suite'){ return value && value.id;}
             else {return value;}
         });
-        jsonOutput = 'var result = { suites : '+jsonOutput+', summary : ' + JSON.stringify(suitesSummary) + '};function getOutput(){return result};';
+        jsonOutput = 'var result = { suites : '+jsonOutput+', summary : ' + JSON.stringify(suitesSummary) + ', environment : ' + JSON.stringify(envDetails) + '};function getOutput(){return result};';
 
         this.copyFolderRecursiveSync(__dirname + '/angular-html-report-template', this.options.savePath, false, () => {
             fs.writeFile(path.join(this.options.savePath, './assets/output.js'), jsonOutput, (err) => {
