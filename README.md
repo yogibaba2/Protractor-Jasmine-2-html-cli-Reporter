@@ -33,6 +33,16 @@ exports.config = {
 }</code></pre>
 
 ## Options
+
+### jasmine-console-reporter options
+Use below option to enable <code>jasmine-console-reporter</code>
+<pre><code>
+   cliReport: {
+    enabled: true,
+    options:{} // this support all the options for https://github.com/onury/jasmine-console-reporter.git
+  }
+</code></pre>
+
 ### Destination folder
 
 Output directory for created files. All screenshots and reports will be stored here.
