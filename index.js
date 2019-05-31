@@ -533,10 +533,13 @@ class Jasmine2HTMLCLIReporter {
 
 
         this.copyFolderRecursiveSync(__dirname + '/angular-html-report-template', this.options.savePath, false, () => {
-            fs.writeFile(path.join(this.options.savePath, './assets/output.js'), jsonOutput, (err) => {
+            fs.mkdir(path.join(this.options.savePath, './assets'), (err) => {
                 if (err) throw err;
-                console.log('The file has been saved!');
-              });
+                fs.writeFile(path.join(this.options.savePath, './assets/output.js'), jsonOutput, (err) => {
+                    if (err) throw err;
+                    console.log('The file has been saved!');
+                  });
+            })  
         });
 
         
