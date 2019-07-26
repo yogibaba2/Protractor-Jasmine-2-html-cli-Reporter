@@ -14,11 +14,16 @@ This project combine cli and html reporting for Jasmine reporter.
 
 ##screens:
 ###Dhashboard
+
 ![Dhashboard](sample-screen/dashboard.png)
+
 ###Graphs and info\
-![Graphs and info](sample-screen/Graphs and info.png)
+
+![Graphs and info]("sample-screen/Graphs-and-info.png")
+
 ###Spec details
-![spec details](sample-screen/spec details.png)
+
+![spec details]("sample-screen/spec-details.png")
 
 ## Usage
 The <code>protractor-jasmine2-html-cli-reporter</code> is available via npm:
