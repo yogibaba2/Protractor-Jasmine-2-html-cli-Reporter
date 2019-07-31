@@ -17,7 +17,7 @@ This project combine cli and html reporting for Jasmine reporter.
 
 ![Dhashboard](sample-screen/dashboard.png)
 
-###Graphs and info\
+###Graphs and info
 
 ![Graphs and info](sample-screen/Graphs-and-info.png)
 
